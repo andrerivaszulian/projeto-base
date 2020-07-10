@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: projeto-base
+  jpa:
+    show-sql: true
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost/projetobase?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=America/Sao_Paulo
+    username: root
+    password: 
+  profiles:
+    active: develop
