@@ -2,14 +2,12 @@ package br.com.cerberusit.service.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class PerfilForm {
+public class AddPerfilForm {
 
-	private String nome;
-	
-	public PerfilForm() {}
-	
-	
+	private Long idPerfil;
 }

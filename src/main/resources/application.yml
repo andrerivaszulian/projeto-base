@@ -12,3 +12,10 @@ spring:
     password: 
   profiles:
     active: develop
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+
+client:
+  secret: Erb7Pt1R:/9l-r|rSxjgG@3s|/?7}<
