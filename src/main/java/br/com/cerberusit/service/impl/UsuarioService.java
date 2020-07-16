@@ -3,7 +3,7 @@ package br.com.cerberusit.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.cerberusit.model.Perfil;
@@ -17,7 +17,7 @@ import br.com.cerberusit.service.interfaces.IUsuarioService;
 public class UsuarioService implements IUsuarioService{
 	
 	@Autowired
-	private BCryptPasswordEncoder pe;
+	private PasswordEncoder pe;
 	
 	@Autowired
 	private IUsuarioRepository usuarioRepository;

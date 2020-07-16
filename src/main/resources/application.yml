@@ -19,3 +19,6 @@ spring:
 
 client:
   secret: Erb7Pt1R:/9l-r|rSxjgG@3s|/?7}<
+  jwt:
+    signature: CerberusItTokenSignature
+    expiration: 60000
