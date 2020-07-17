@@ -15,7 +15,8 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-
+  main:
+    allow-bean-definition-overriding: true
 
 client:
   secret: Erb7Pt1R:/9l-r|rSxjgG@3s|/?7}<
