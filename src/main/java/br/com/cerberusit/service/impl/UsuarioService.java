@@ -27,7 +27,7 @@ public class UsuarioService implements IUsuarioService{
 
 	@Override
 	public Usuario criarUsuario(UsuarioForm form) {
-		Usuario usuario = new Usuario(form.getEmail(), form.getPerfis(), pe.encode(form.getSenha()));
+		Usuario usuario = new Usuario(form.getEmail(), form.getPerfil(), pe.encode(form.getSenha()));
 		this.usuarioRepository.save(usuario);
 		return usuario;
 	}
@@ -48,7 +48,7 @@ public class UsuarioService implements IUsuarioService{
 	public Usuario addPerfil(Long idUsuario, Long idPerfil) {
 		Usuario u = this.usuarioRepository.findById(idUsuario).get();
 		Perfil perfil = this.perfilService.buscarPorId(idPerfil);
-		u.getPerfis().add(perfil);
+		u.setPerfil(perfil);
 		Usuario usuario = this.usuarioRepository.save(u);
 		return usuario;
 	}

@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.cerberusit.model.Perfil;
 import br.com.cerberusit.model.Usuario;
 import br.com.cerberusit.repository.interfaces.IUsuarioRepository;
 
@@ -27,12 +28,12 @@ public class AppUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Usuario> obj = this.usuarioRepository.findByEmail(username);
 		Usuario usuario = obj.orElseThrow(()-> new UsernameNotFoundException("Usuario e/ou senha inválidos!"));
-		return new User(username, usuario.getSenha(), getPermissoes(usuario));
+		return new User(username, usuario.getSenha(), getPermissoes(usuario.getPerfil()));
 	}
 
-	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
+	private Collection<? extends GrantedAuthority> getPermissoes(Perfil perfil) {
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-		usuario.getPerfis().forEach(x -> authorities.add(new SimpleGrantedAuthority(x.getRole())));
+		perfil.getPermissoes().forEach(x -> authorities.add(new SimpleGrantedAuthority(x.getPermissao())));
 		return authorities;
 	}
 

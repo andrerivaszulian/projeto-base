@@ -19,7 +19,11 @@ spring:
     allow-bean-definition-overriding: true
 
 client:
-  secret: Erb7Pt1R:/9l-r|rSxjgG@3s|/?7}<
+  secret:
+    webapp: fZ2Fpb0Bob3RtYWlsLm
   jwt:
     signature: CerberusItTokenSignature
-    expiration: 60000
+    accessToken:
+      expiration: 86400
+    refreshToken:
+      expiration: 604800
