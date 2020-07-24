@@ -18,7 +18,7 @@ import br.com.cerberusit.service.interfaces.IPerfilService;
 
 @RestController
 @RequestMapping("/perfil")
-public class PerfilController {
+public class PerfilResource {
 
 	@Autowired
 	private IPerfilService perfilService;
