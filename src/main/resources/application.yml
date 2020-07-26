@@ -6,12 +6,6 @@ spring:
     database: MYSQL
     hibernate:
       ddl-auto: update
-  datasource:
-    url: jdbc:mysql://localhost/projetobase?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=America/Sao_Paulo
-    username: root
-    password: 
-  profiles:
-    active: develop
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -27,3 +21,21 @@ client:
       expiration: 86400
     refreshToken:
       expiration: 604800
+      
+---
+spring:
+  profiles:
+    active: develop
+
+
+---
+spring:  profiles:    active: homolog
+  datasource:
+    url: jdbc:mysql://localhost/projetobase?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=America/Sao_Paulo
+    username: root
+    password:
+   
+    
+---
+spring:  profiles:    active: prod
+    
