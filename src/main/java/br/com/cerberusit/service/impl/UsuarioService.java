@@ -1,8 +1,8 @@
 package br.com.cerberusit.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +27,15 @@ public class UsuarioService implements IUsuarioService{
 
 	@Override
 	public Usuario criarUsuario(UsuarioForm form) {
-		Usuario usuario = new Usuario(form.getEmail(), form.getPerfil(), pe.encode(form.getSenha()));
+		Perfil perfil = this.perfilService.buscarPorId(form.getPerfil());
+		Usuario usuario = Usuario.criarUsuarioPadrao(form.getEmail(), perfil, pe.encode(form.getSenha()));
 		this.usuarioRepository.save(usuario);
 		return usuario;
 	}
 
 	@Override
-	public List<Usuario> buscarTodos() {
-		List<Usuario> usuarios = this.usuarioRepository.findAll();
+	public Page<Usuario> buscarTodos(Pageable pageable) {
+		Page<Usuario> usuarios = this.usuarioRepository.findAll(pageable);
 		return usuarios;
 	}
 
@@ -51,5 +52,21 @@ public class UsuarioService implements IUsuarioService{
 		u.setPerfil(perfil);
 		Usuario usuario = this.usuarioRepository.save(u);
 		return usuario;
+	}
+
+	@Override
+	public Usuario bloquearUsuario(Long id) {
+		Usuario usuario = this.usuarioRepository.findById(id).get();
+		usuario.setAtivo(!usuario.getAtivo());
+		this.usuarioRepository.save(usuario);
+		return usuario;
+	}
+
+	@Override
+	public void deletar(Long id) {
+		Usuario usuario = this.usuarioRepository.findById(id).get();
+		if(usuario != null) {
+			this.usuarioRepository.delete(usuario);
+		}
 	}
 }

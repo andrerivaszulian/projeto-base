@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,7 @@ public class Perfil implements Serializable {
 	)
 	private List<Permissao> permissoes;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "perfil", fetch = FetchType.LAZY)
 	private List<Usuario> usuarios;
 

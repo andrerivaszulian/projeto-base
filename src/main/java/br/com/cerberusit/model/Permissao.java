@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,7 @@ public class Permissao {
 	private Long id;
 	private String permissao;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "permissoes", fetch = FetchType.LAZY)
 	private List<Perfil> perfis;
 }

@@ -12,11 +12,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "t_usuario")
@@ -26,15 +28,19 @@ public class Usuario {
 	private Long id;
 	@Column(unique = true)
 	private String email;
+	private Boolean ativo;
 	@JsonIgnore
 	private String senha;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Perfil perfil;
 
-	public Usuario(String email, Perfil perfil, String senha) {
-		this.email = email;
-		this.perfil = perfil;
-		this.senha = senha;
+	public static Usuario criarUsuarioPadrao(String email, Perfil perfil, String senha) {
+		return Usuario.builder()
+			.email(email)
+			.senha(senha)
+			.perfil(perfil)
+			.ativo(Boolean.TRUE)
+			.build();
 	}
 }

@@ -32,6 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			.antMatchers("/usuario/**", "/perfil/**").permitAll()
 			.anyRequest().authenticated()
 				.and()
 			.httpBasic()
@@ -48,8 +49,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		delPasswordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
-		return delPasswordEncoder;
+//		DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//		delPasswordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
+//		return delPasswordEncoder;
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 }
