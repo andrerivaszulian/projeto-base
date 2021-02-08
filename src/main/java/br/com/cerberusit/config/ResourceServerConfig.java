@@ -49,9 +49,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-//		DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//		delPasswordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
-//		return delPasswordEncoder;
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		delPasswordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
+		return delPasswordEncoder;
 	}
 }

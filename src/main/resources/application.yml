@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: homolog
   application:
     name: projeto-base
   jpa:
@@ -12,7 +14,10 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-server:  port: 8080
+server:
+  port: 8080
+  servlet:
+    context-path: /projeto-base
 
 client:
   secret:
@@ -31,7 +36,9 @@ spring:
 
 
 ---
-spring:  profiles:    active: homolog
+spring:
+  profiles:
+    active: homolog
   datasource:
     url: jdbc:mysql://localhost/projetobase?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=America/Sao_Paulo
     username: root
@@ -39,5 +46,8 @@ spring:  profiles:    active: homolog
    
     
 ---
-spring:  profiles:    active: prod
+spring:
+  profiles:
+    active: prod
+
     

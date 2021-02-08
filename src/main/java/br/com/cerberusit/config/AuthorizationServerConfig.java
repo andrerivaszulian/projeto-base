@@ -2,7 +2,6 @@ package br.com.cerberusit.config;
 
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +17,15 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import br.com.cerberusit.config.token.CustomTokenEnhancer;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	@Autowired
-	private PasswordEncoder pe;
+	private final AuthenticationManager authenticationManager;
+	private final PasswordEncoder pe;
 	
 	@Value("${client.secret.webapp}")
 	private String accessTokenSecret;
