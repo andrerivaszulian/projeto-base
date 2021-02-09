@@ -1,5 +1,7 @@
 package br.com.cerberusit.resource;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,56 +13,63 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cerberusit.model.Usuario;
-import br.com.cerberusit.service.form.AddPerfilForm;
+import br.com.cerberusit.service.form.AlterarUsuarioForm;
 import br.com.cerberusit.service.form.UsuarioForm;
 import br.com.cerberusit.service.interfaces.IUsuarioService;
+import lombok.RequiredArgsConstructor;
+import br.com.cerberusit.dto.UsuarioDTO;
 
 @RestController
-@RequestMapping("/usuario")
+@RequiredArgsConstructor
+@RequestMapping("/usuarios")
 public class UsuarioResource {
 
-	@Autowired
-	private IUsuarioService usuarioService;
+	private final IUsuarioService usuarioService;
 
 	@PostMapping
-	public ResponseEntity<Usuario> criarUsuario(@RequestBody UsuarioForm form) {
-		Usuario usuario = this.usuarioService.criarUsuario(form);
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	public ResponseEntity<UsuarioDTO> criarUsuario(@RequestBody UsuarioForm form) {
+		UsuarioDTO usuario = this.usuarioService.criarUsuario(form);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<Usuario>> buscarUsuarios(
-			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-		Page<Usuario> usuarios = this.usuarioService.buscarTodos(pageable);
-		return new ResponseEntity<Page<Usuario>>(usuarios, HttpStatus.OK);
+	public ResponseEntity<List<UsuarioDTO>> buscarUsuarios(){
+		List<UsuarioDTO> usuarios = this.usuarioService.buscarTodos();
+		return new ResponseEntity<>(usuarios, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
-		Usuario usuario = this.usuarioService.buscarPorId(id);
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id) {
+		UsuarioDTO usuario = this.usuarioService.buscarPorId(id);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@PostMapping("/{id}/add-perfil")
-	public ResponseEntity<Usuario> adicionarPerfil(@RequestBody AddPerfilForm idPerfil, @PathVariable Long id) {
-		Usuario usuario = this.usuarioService.addPerfil(id, idPerfil.getIdPerfil());
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	public ResponseEntity<UsuarioDTO> adicionarPerfil(@RequestBody Long idPerfil, @PathVariable Long id) {
+		UsuarioDTO usuario = this.usuarioService.addPerfil(id, idPerfil);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@PostMapping("/{id}/bloquear")
-	public ResponseEntity<Usuario> bloquear(@PathVariable Long id) {
-		Usuario usuario = this.usuarioService.bloquearUsuario(id);
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	public ResponseEntity<UsuarioDTO> bloquear(@PathVariable Long id) {
+		UsuarioDTO usuario = this.usuarioService.bloquearUsuario(id);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletar(@PathVariable Long id) {
 		this.usuarioService.deletar(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+	@PutMapping
+	public ResponseEntity<UsuarioDTO> alterarUsuario(@RequestBody AlterarUsuarioForm form){
+		UsuarioDTO usuario = this.usuarioService.alterarUsuario(form);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 }

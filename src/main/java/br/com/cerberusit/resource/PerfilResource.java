@@ -12,32 +12,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cerberusit.dto.PerfilDTO;
 import br.com.cerberusit.model.Perfil;
 import br.com.cerberusit.service.form.PerfilForm;
 import br.com.cerberusit.service.interfaces.IPerfilService;
 
 @RestController
-@RequestMapping("/perfil")
+@RequestMapping("/perfis")
 public class PerfilResource {
 
 	@Autowired
 	private IPerfilService perfilService;
 	
 	@PostMapping
-	public ResponseEntity<Perfil> criarPerfil(@RequestBody PerfilForm form){
-		Perfil perfil = this.perfilService.criarPerfil(form);
-		return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
+	public ResponseEntity<PerfilDTO> criarPerfil(@RequestBody PerfilForm form){
+		PerfilDTO perfil = this.perfilService.criarPerfil(form);
+		return new ResponseEntity<>(perfil, HttpStatus.OK);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Perfil>> buscarTodos(){
-		List<Perfil> perfis = this.perfilService.buscarTodos();
-		return new ResponseEntity<List<Perfil>>(perfis, HttpStatus.OK);
+	public ResponseEntity<List<PerfilDTO>> buscarTodos(){
+		List<PerfilDTO> perfis = this.perfilService.buscarTodos();
+		return new ResponseEntity<>(perfis, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Perfil> buscarPorId(@PathVariable Long id){
-		Perfil perfil = this.perfilService.buscarPorId(id);
-		return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
+	public ResponseEntity<PerfilDTO> buscarPorId(@PathVariable Long id){
+		PerfilDTO perfil = this.perfilService.buscarPorId(id);
+		return new ResponseEntity<>(perfil, HttpStatus.OK);
 	}
 }

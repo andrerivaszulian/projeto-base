@@ -16,13 +16,26 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
+@RequiredArgsConstructor
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
+
+	protected static final String[] DOCS_INFRA_API = {
+		"/swagger-resources/**", 
+		"//swagger-resources/configuration/**", 
+		"/swagger-ui.html", 
+		"/swagger-ui.html/**",
+		"/v2/api-docs", 
+		"/webjars/**", 
+		"/actuator/**",
+		"/**.html",
+		"/configuration/**"};
 	
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,7 +45,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/usuario/**", "/perfil/**").permitAll()
+			.antMatchers(DOCS_INFRA_API).permitAll()
+			.antMatchers("/usuarios/**", "/perfis/**").permitAll()
 			.anyRequest().authenticated()
 				.and()
 			.httpBasic()

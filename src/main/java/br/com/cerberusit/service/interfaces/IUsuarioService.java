@@ -1,17 +1,18 @@
 package br.com.cerberusit.service.interfaces;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
-import br.com.cerberusit.model.Usuario;
+import br.com.cerberusit.dto.UsuarioDTO;
+import br.com.cerberusit.service.form.AlterarUsuarioForm;
 import br.com.cerberusit.service.form.UsuarioForm;
 
 public interface IUsuarioService {
 
-	Usuario criarUsuario(UsuarioForm form);
-	Page<Usuario> buscarTodos(Pageable pageable);
-	Usuario addPerfil(Long idUsuario, Long idPerfil);
-	Usuario buscarPorId(Long id);
-	Usuario bloquearUsuario(Long id);
+	UsuarioDTO criarUsuario(UsuarioForm form);
+	List<UsuarioDTO> buscarTodos();
+	UsuarioDTO addPerfil(Long idUsuario, Long idPerfil);
+	UsuarioDTO buscarPorId(Long id);
+	UsuarioDTO bloquearUsuario(Long id);
+	UsuarioDTO alterarUsuario(AlterarUsuarioForm form);
 	void deletar(Long id);
 }
